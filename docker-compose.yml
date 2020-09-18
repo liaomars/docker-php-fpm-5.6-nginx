@@ -1,0 +1,53 @@
+version: '2'
+services:
+
+  # 公共镜像，只配置了国内镜像加速和中国时区配置
+  alpine:
+    build: alpine
+    image: water/alpine
+
+  redis:
+    build: redis
+    image: water/redis
+    container_name: redis
+    depends_on:
+      - "alpine"
+    ports:
+      - "63791:6379"
+    restart: always
+    
+  php56:
+    build: php56
+    image: water/phpfpm
+    container_name: php56
+    depends_on:
+      - "alpine"
+    links:
+      - redis
+      - memcache
+    volumes:
+      - "./apps:/apps:rw"
+    restart: always
+
+  nginx:
+    build: nginx
+    image: water/nginx
+    container_name: nginx
+    depends_on:
+      - "alpine"
+    links:
+      - php56:phpfpm
+    volumes:
+      - ./apps:/apps/:rw
+      - ./nginx/conf/vhosts.conf:/etc/nginx/conf.d/vhosts.conf:rw
+    ports:
+      - "8081:80"
+    restart: always
+    
+  memcache:
+    image: "memcached:1.5.7"
+    container_name: memcache
+    expose:
+    - "11211"
+    ports:
+    - "11211:11211"

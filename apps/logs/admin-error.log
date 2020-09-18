@@ -1,0 +1,2 @@
+2020/09/18 17:13:00 [error] 6#6: *2 open() "/apps/www/ml_admin/favicon.ico" failed (2: No such file or directory), client: 172.19.0.1, server: admin.ml.com, request: "GET /favicon.ico HTTP/1.1", host: "admin.ml.com:8081", referrer: "http://admin.ml.com:8081/"
+2020/09/18 17:13:00 [error] 6#6: *2 open() "/usr/share/nginx/html/404.html" failed (2: No such file or directory), client: 172.19.0.1, server: admin.ml.com, request: "GET /favicon.ico HTTP/1.1", host: "admin.ml.com:8081", referrer: "http://admin.ml.com:8081/"
