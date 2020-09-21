@@ -16,17 +16,17 @@ services:
       - "63791:6379"
     restart: always
     
-  php56:
-    build: php56
-    image: water/phpfpm
-    container_name: php56
-    depends_on:
-      - "alpine"
+  php54:
+    build: php54
+    image: phpfpm
+    container_name: php54
     links:
       - redis
       - memcache
     volumes:
       - "./apps:/apps:rw"
+      - ./php54/php.ini:/usr/local/etc/php/php.ini:ro
+      - ./php54/php-fpm.conf:/usr/local/etc/php-fpm.d/php-fpm.conf:rw
     restart: always
 
   nginx:
@@ -36,7 +36,7 @@ services:
     depends_on:
       - "alpine"
     links:
-      - php56:phpfpm
+      - php54:phpfpm
     volumes:
       - ./apps:/apps/:rw
       - ./nginx/conf/vhosts.conf:/etc/nginx/conf.d/vhosts.conf:rw
